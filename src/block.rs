@@ -1,5 +1,6 @@
 use std::fmt::{self, Debug, Formatter};
 type BlockHash = Vec<u8>;
+use crate::hashable::Hashable;
 use rusty_blockchain::*;
 
 pub struct Block {

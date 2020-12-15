@@ -1,4 +1,4 @@
-pub trait Hashable {
+pub(crate) trait Hashable {
     fn bytes(&self) -> Vec<u8>;
 
     fn hash(&self) -> Vec<u8> {

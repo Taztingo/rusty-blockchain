@@ -1,5 +1,3 @@
-mod hashable;
-pub use crate::hashable::Hashable;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 pub fn now() -> u128 {
