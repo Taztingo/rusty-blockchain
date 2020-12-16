@@ -33,6 +33,27 @@ impl Block {
             payload,
         }
     }
+
+    pub fn mine(&mut self, difficulty: usize) {
+        println!("Mining");
+        loop {
+            let mut mined = true;
+            for i in 0..difficulty {
+                mined &= self.hash[i] == 0;
+            }
+
+            if mined {
+                break;
+            }
+            self.nonce += 1;
+            self.hash = self.hash();
+            
+            for i in 0..self.hash.len() {
+                print!("{}", self.hash[i]);
+            }
+            println!("");
+        }
+    }
 }
 
 impl Hashable for Block {

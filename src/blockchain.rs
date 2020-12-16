@@ -4,12 +4,14 @@ use rusty_blockchain::now;
 
 pub struct Blockchain {
     blocks: Vec<Block>,
+    difficulty: usize,
 }
 
 impl Blockchain {
-    pub fn new() -> Self {
+    pub fn new(difficulty: usize) -> Self {
         let mut chain = Blockchain {
-            blocks: Vec::new()
+            blocks: Vec::new(),
+            difficulty: difficulty,
         };
         chain.add("Genesis");
         chain
@@ -17,14 +19,17 @@ impl Blockchain {
 
     pub fn add(&mut self, payload: &str) {
         if self.blocks.len() == 0 {
-            let block = Block::new(self.blocks.len() as u32, 
+            let mut block = Block::new(self.blocks.len() as u32, 
         now(), vec![0;32], 0, payload.to_owned());
+            block.hash = block.hash();
+            block.mine(self.difficulty);
             self.blocks.push(block);
         } else {
             let previous_hash = self.blocks[self.blocks.len() - 1].hash.clone();
             let mut block = Block::new(self.blocks.len() as u32, 
         now(), previous_hash, 0, payload.to_owned());
             block.hash = block.hash();
+            block.mine(self.difficulty);
             self.blocks.push(block);
         }
     }
